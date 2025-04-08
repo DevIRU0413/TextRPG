@@ -1,0 +1,36 @@
+# 모든 텍스트 파일은 자동으로 인코딩 처리
+* text=auto
+
+# Windows 스타일 줄바꿈(CRLF)을 사용하되,
+# 클론 시 로컬 OS 스타일에 맞게 체크아웃
+*.cs     text diff=csharp
+*.csproj text
+*.sln    text
+*.config text
+*.json   text
+*.xml    text
+*.md     text
+*.txt    text
+*.yml    text
+
+# 바이너리 파일은 자동 CRLF 변환 방지
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.pdf    binary
+*.mp4    binary
+*.exe    binary
+*.dll    binary
+*.pdb    binary
+
+# GitHub에서 코드 보기가 편하도록 C# 코드 구문 강조
+*.cs linguist-language=C#
+
+# 병합 충돌 방지용 - 특정 파일은 병합 전략 무시
+*.lock merge=union
+
+# 이모지 및 한글 등 깨짐 방지용 UTF-8 명시
+*.cs text eol=crlf working-tree-encoding=UTF-8
+*.md text eol=lf working-tree-encoding=UTF-8
