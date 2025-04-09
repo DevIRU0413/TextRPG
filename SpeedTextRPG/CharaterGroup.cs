@@ -8,36 +8,32 @@ namespace SpeedTextRPG
 {
     public class CharacterGroup
     {
-        private List<Character> _characters;
+        private string _groupName;
+        public List<Character> Characters;
 
-        public CharacterGroup(List<Character> characters)
+        public CharacterGroup(string name)
         {
-            _characters = characters;
-            if (_characters == null)
-                _characters = new List<Character>();
+            _groupName = name;
+            Characters = new();
+        }
+
+        public CharacterGroup(string name, List<Character> characters)
+        {
+            _groupName = name;
+            Characters = characters;
+            if (Characters == null)
+                Characters = new List<Character>();
         }
 
         public void SetCharacter(Character character)
         {
-            if (_characters.Contains(character)) return;
-            _characters.Add(character);
+            if (Characters.Contains(character)) return;
+            Characters.Add(character);
         }
         public void RemoveCharacter(Character character)
         {
-            if (!_characters.Contains(character)) return;
-            _characters.Remove(character);
-        }
-
-        // 배틀 매니저에서 배틀 시작 시 사용
-        public List<Character> Encounter()
-        {
-            foreach (Character character in _characters)
-            {
-                if (character == null) continue;
-                character.BattleStartSetting();
-            }
-
-            return _characters;
+            if (!Characters.Contains(character)) return;
+            Characters.Remove(character);
         }
     }
 }

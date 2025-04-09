@@ -11,7 +11,7 @@ namespace SpeedTextRPG.Skills.Asta
         private const int MaxStacks = 5;
         private const float AttackBuffPerStack = 14f;
 
-        public void OnAttack(Character user, Character target)
+        public void OnAttack(Character character, Character target)
         {
             stacks++;
             if (target.Attribute == AttributeType.Fire) stacks++; // 화염 약점 추가 중첩
@@ -19,22 +19,22 @@ namespace SpeedTextRPG.Skills.Asta
             if (stacks > MaxStacks) stacks = MaxStacks;
 
             Console.WriteLine($"아스타 충전 중첩: {stacks} → 전체 아군 ATK 증가");
-            ApplyBuffToAllies(user);
+            ApplyBuffToAllies(character);
         }
 
-        public void OnTurnStart(Character user)
+        public void OnTurnStart(Character character)
         {
             if (stacks > 0)
             {
                 stacks = Math.Max(0, stacks - 3);
                 Console.WriteLine($"아스타 충전 중첩 감소 → {stacks}");
-                ApplyBuffToAllies(user);
+                ApplyBuffToAllies(character);
             }
         }
 
-        private void ApplyBuffToAllies(Character user)
+        private void ApplyBuffToAllies(Character character)
         {
-            var allies = BattleManager.Instance.GetAllEnemies(user);
+            var allies = BattleManager.Instance.GetAllEnemies(character);
             foreach (var ally in allies)
             {
                 float buffAmount = stacks * AttackBuffPerStack;

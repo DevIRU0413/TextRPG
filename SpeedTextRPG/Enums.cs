@@ -52,6 +52,7 @@
 
     public enum StatType
     {
+        None,
         ATK,
         DEF,
         SPD,
