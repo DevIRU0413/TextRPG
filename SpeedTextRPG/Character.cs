@@ -35,24 +35,13 @@ namespace SpeedTextRPG
             SkillBag = skillBag;
         }
 
-        public override string ToString()
+        public AttributeType WeaknessAttribute => GetWeaknessAttribute(Attribute);
+
+        public void ReceiveDamage(DamageInfo info)
         {
-            string result = $"이름: {Name} \n레벨: {Level} \n체력: {HealthPoint}/{HealthMaxPoint} \n공격력: {AttackPower} \n방어력: {DefensePoint} \n속도: {BaseSpeed}";
-            return result;
-        }
-
-        public void ReceiveDamage(float damage, AttributeType attribute)
-        {
-            AttributeType weaknessAttribute = GetWeaknessAttribute(attribute);
-            // 공격 받은 캐릭터가 가진 속성이 약점 속성일 경우, 데미지 * 1.2배
-            if (Attribute == weaknessAttribute)
-                damage *= 1.2f;
-
-            float finalDamage = damage - DefensePoint;
-            if (finalDamage < 0) finalDamage = 0;
-            HealthPoint -= finalDamage;
-
-            Console.WriteLine($"♥ {Name} 남은 체력: {HealthPoint}");
+            float damage = info.FinalDamage;
+            HealthPoint -= damage;
+            Console.WriteLine($"{Name}이(가) {damage} 피해를 입음! (남은 체력: {HealthPoint})");
             if (HealthPoint <= 0)
                 Console.WriteLine($"{Name} 이(가) 쓰러졌습니다!");
         }
@@ -161,6 +150,11 @@ namespace SpeedTextRPG
                     break;
             }
             return weaknessAttribute;
+        }
+        public override string ToString()
+        {
+            string result = $"이름: {Name} \n레벨: {Level} \n체력: {HealthPoint}/{HealthMaxPoint} \n공격력: {AttackPower} \n방어력: {DefensePoint} \n속도: {BaseSpeed}";
+            return result;
         }
     }
 }

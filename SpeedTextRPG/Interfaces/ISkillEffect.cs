@@ -8,7 +8,10 @@ namespace SpeedTextRPG.Interfaces
 {
     public interface ISkillEffect
     {
+        AttributeType Attribute { get;}
+        TargetType Target { get; }
         string Description { get; }
+
         void Apply(Character user, List<Character> targets);
     }
 }

@@ -19,10 +19,9 @@ namespace SpeedTextRPG.Skills
         {
             foreach (var target in targets)
             {
-                float damage = user.AttackPower * PowerRatio;
+                DamageInfo info = new(user, target, Attribute, PowerRatio, 0);
                 Console.WriteLine($"{target.Name}에게 {Attribute} 피해 공격!");
-
-                target.ReceiveDamage(user.AttackPower, Attribute);
+                target.ReceiveDamage(info);
             }
         }
     }

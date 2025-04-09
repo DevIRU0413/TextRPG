@@ -7,6 +7,8 @@ namespace SpeedTextRPG.Skills.Asta
     {
         public float BuffAmount { get; set; } = 0f;
         public int Duration { get; set; } = 1;
+
+        public AttributeType Attribute { get; } = AttributeType.None;
         public TargetType Target { get; set; } = TargetType.AllAllies;
         public string Description { get; set; } = "SPD 증가 버프";
 
@@ -20,7 +22,7 @@ namespace SpeedTextRPG.Skills.Asta
                     Description = $"{Duration}턴 동안 SPD +{BuffAmount}",
                     Stat = StatType.SPD,
                     Amount = BuffAmount,
-                    Duration = Duration,
+                    Duration = this.Duration,
                     Type = BuffType.Buff,
                     IsStackable = false
                 };
