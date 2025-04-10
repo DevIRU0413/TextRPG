@@ -3,17 +3,16 @@ using SpeedTextRPG.Interfaces;
 
 namespace SpeedTextRPG.Skills.DanHeng
 {
-    internal class EtherealDreamEffect : ISkillEffect
+    internal class EtherealDreamEffect : SkillEffect, ISkillActionable
     {
         public float BasePowerRatio { get; set; } = 2.4f; // 240%
         public float BonusMultiplier { get; set; } = 0.72f; // 72%
-        public string Description { get; set; } = "ATK 240% 바람 피해 + 대상이 느려졌으면 +72% 피해 증가";
-
         public void Apply(Character user, List<Character> targets)
         {
             var target = targets[0];
             float finalRatio = BasePowerRatio;
 
+            // 슬로우 디법 찾기
             bool isSlowed = false;
             foreach (Buff b in target.ActiveBuffs)
             {
@@ -21,16 +20,15 @@ namespace SpeedTextRPG.Skills.DanHeng
                     isSlowed = true;
             }
 
+            // 타겟 슬로우 시
             if (isSlowed)
             {
                 finalRatio += BonusMultiplier;
                 Console.WriteLine($"느려진 적 → 피해 배율 ({BasePowerRatio * 100}%)+{BonusMultiplier * 100}% 적용됨!");
             }
 
-            float damage = user.AttackPower * finalRatio;
-            target.ReceiveDamage(damage, AttributeType.Wind);
-
-            Console.WriteLine($"{target.Name}에게 {damage} 바람 피해! (동천환화, 기나긴 꿈)");
+            target.ReceiveDamage(new(user,target,Attribute,finalRatio,0));
+            Console.WriteLine($"{target.Name}에게 바람 피해! (동천환화, 기나긴 꿈)");
         }
     }
 }

@@ -8,8 +8,8 @@ namespace SpeedTextRPG.Skills
 {
     public class TriggerCondition
     {
-        public string ConditionType { get; set; }    // 예: "TurnStart", "EnemyHasWeakness"
-        public string Parameter { get; set; }        // 예: "Fire", "3턴 이상"
+        public string ConditionType { get; set; }
+        public string Parameter { get; set; }
         public bool Evaluate(Character user)
         {
             // 조건 검사 로직

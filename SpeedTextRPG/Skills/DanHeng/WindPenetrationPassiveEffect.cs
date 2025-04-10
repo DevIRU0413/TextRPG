@@ -3,16 +3,15 @@ using SpeedTextRPG.Interfaces;
 
 namespace SpeedTextRPG.Skills.DanHeng
 {
-    public class WindPenetrationPassiveEffect : ISkillEffect
+    public class WindPenetrationPassiveEffect : SkillEffect, ISkillTurnTrigger, IAllySkillTargetedTrigger
     {
         public float PenetrationAmount = 0.18f;
         public int CooldownTurns = 2;
-        public string Description { get; set; } = "아군 능력 대상 시, 다음 공격에 바람 저항 관통 +18% (2턴 간 재사용 불가)";
 
         private int cooldownRemaining = 0;
-        private bool isBuffApplied = false;
 
-        public void OnAllySkillTargeted(Character danHeng)
+        // 스킬 타겟으로 지정 될 시
+        public void OnAllySkillTargeted(Character user)
         {
             if (cooldownRemaining > 0)
             {
@@ -30,19 +29,17 @@ namespace SpeedTextRPG.Skills.DanHeng
                 Type = BuffType.Buff
             };
 
-            danHeng.ApplyBuff(buff);
-            isBuffApplied = true;
+            user.ApplyBuff(buff);
             cooldownRemaining = CooldownTurns;
             Console.WriteLine($"각자의 장점 발동! 바람 저항 관통 강화");
         }
 
-        public void OnTurnStart()
+        public void OnTurnStart(Character user)
         {
-            if (cooldownRemaining > 0) 
+            if (cooldownRemaining > 0)
                 cooldownRemaining--;
         }
 
-        public void Apply(Character user, List<Character> targets) { /* 자동 트리거 */ }
+        public void OnTurnEnd(Character user) { }
     }
-
 }

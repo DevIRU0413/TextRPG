@@ -13,9 +13,6 @@ namespace SpeedTextRPG.Skills
         public int EnergyCost { get; set; } = 0;     // 궁극기용
         public int Cooldown { get; set; } = 0;       // 발동 후 재사용 대기
 
-        public List<TriggerCondition> StartConditions { get; set; } = new();
-        public List<TriggerCondition> ActivationConditions { get; set; } = new();
-
-        public ISkillEffect Effect { get; set; }
+        public SkillEffect Effect { get; set; }
     }
 }

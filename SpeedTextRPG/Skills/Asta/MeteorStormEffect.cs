@@ -2,15 +2,10 @@
 
 namespace SpeedTextRPG.Skills.Asta
 {
-    public class MeteorStormEffect : ISkillEffect
+    public class MeteorStormEffect : SkillEffect, ISkillActionable
     {
         public float PowerRatio { get; set; } = 0.5f;
         public int RandomAttackCount { get; set; } = 4;
-
-        public AttributeType Attribute { get; set; } = AttributeType.Fire;
-        public TargetType Target { get; set; } = TargetType.RandomEnemies;
-        public string Description { get; } = "지정 적 1 + 무작위 적 4회 화염 피해";
-
         public void Apply(Character user, List<Character> targets)
         {
             if (targets == null || targets.Count == 0) return;

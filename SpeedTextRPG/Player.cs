@@ -30,7 +30,6 @@
                 _haveGold = 0;
         }
 
-
         // 몬스터와 충돌 시
         public void BattleEncounter(CharacterGroup targetGroup)
         {

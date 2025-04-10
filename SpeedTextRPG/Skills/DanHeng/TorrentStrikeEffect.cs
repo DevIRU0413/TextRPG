@@ -8,20 +8,16 @@ using System.Threading.Tasks;
 
 namespace SpeedTextRPG.Skills.DanHeng
 {
-    public class TorrentStrikeEffect : ISkillEffect
+    public class TorrentStrikeEffect : SkillEffect, ISkillActionable
     {
         public float PowerRatio { get; set; } = 1.3f;
         public float SpdReductionPercent = 0.12f;
         public int DebuffDuration = 2;
-        public string Description { get; set; } = "ATK 130% 바람 피해 + 치명타 시 SPD 12% 감소 (2턴)";
-
         public void Apply(Character user, List<Character> targets)
         {
             var target = targets[0];
-            float damage = user.AttackPower * PowerRatio;
-
-            target.ReceiveDamage(damage, AttributeType.Wind);
-            Console.WriteLine($"{target.Name}에게 {damage} 바람 피해! (토런트)");
+            target.ReceiveDamage(new(user, target, Attribute, PowerRatio, 0));
+            Console.WriteLine($"{target.Name}에게 바람 피해! (운기 창술•질우)");
 
             bool isCritical = new Random().NextDouble() < 0.5; // 치명타 확률은 임시 50%
             if (isCritical)

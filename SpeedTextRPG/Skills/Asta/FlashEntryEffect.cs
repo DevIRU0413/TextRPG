@@ -2,22 +2,18 @@
 
 namespace SpeedTextRPG.Skills.Asta
 {
-    public class FlashEntryEffect : ISkillEffect
+    public class FlashEntryEffect : SkillEffect, ISkillActionable
     {
         public float PowerRatio { get; set; } = 0.5f;
-        public AttributeType Attribute { get; set; } = AttributeType.Fire;
-        public string Description { get; set; }
-
-        public void Apply(Character character, List<Character> targets)
+        public void Apply(Character user, List<Character> targets)
         {
-            var enemies = BattleManager.Instance.GetAllEnemies(character);
+            var enemies = BattleManager.Instance.GetAllEnemies(user);
             foreach (var enemy in enemies)
             {
-                float damage = character.AttackPower * PowerRatio;
-                enemy.ReceiveDamage(damage, Attribute);
-                Console.WriteLine($"{enemy.Name}에게 {damage}의 {Attribute} 피해! (기적의 플래시)");
+                DamageInfo info = new DamageInfo(user, enemy, Attribute, PowerRatio, 0);
+                enemy.ReceiveDamage(info);
+                Console.WriteLine($"{enemy.Name}에게 {Attribute} 피해! (기적의 플래시)");
             }
         }
     }
-
 }

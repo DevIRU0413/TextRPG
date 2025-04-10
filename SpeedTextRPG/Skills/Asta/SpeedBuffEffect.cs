@@ -3,15 +3,10 @@ using SpeedTextRPG.Interfaces;
 
 namespace SpeedTextRPG.Skills.Asta
 {
-    public class SpeedBuffEffect : ISkillEffect
+    public class SpeedBuffEffect : SkillEffect, ISkillActionable
     {
         public float BuffAmount { get; set; } = 0f;
         public int Duration { get; set; } = 1;
-
-        public AttributeType Attribute { get; } = AttributeType.None;
-        public TargetType Target { get; set; } = TargetType.AllAllies;
-        public string Description { get; set; } = "SPD 증가 버프";
-
         public void Apply(Character user, List<Character> targets)
         {
             foreach (var target in targets)

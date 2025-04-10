@@ -1,5 +1,4 @@
 ﻿using SpeedTextRPG.Skills.Asta;
-using SpeedTextRPG.Skills.Blade;
 using SpeedTextRPG.Skills.DanHeng;
 
 namespace SpeedTextRPG.Managers
