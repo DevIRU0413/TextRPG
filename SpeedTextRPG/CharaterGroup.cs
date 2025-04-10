@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SpeedTextRPG
+﻿namespace SpeedTextRPG
 {
     public class CharacterGroup
     {
@@ -16,7 +10,6 @@ namespace SpeedTextRPG
             _groupName = name;
             Characters = new();
         }
-
         public CharacterGroup(string name, List<Character> characters)
         {
             _groupName = name;

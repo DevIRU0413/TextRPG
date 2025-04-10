@@ -1,12 +1,5 @@
 ﻿namespace SpeedTextRPG
 {
-    public enum GroupState
-    {
-        None,
-        Alive, // 살아있는 상태
-        Die, // 죽은 상태
-    }
-
     public enum SkillType
     {
         Normal,    // 기본 
@@ -79,5 +72,13 @@
         Seele
     }
 
-
+    public enum SceneType
+    {
+        Title,
+        MainMenu,
+        Battle,
+        Dialogue,
+        Map,
+        Result
+    }
 }

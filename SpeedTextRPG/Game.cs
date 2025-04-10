@@ -1,12 +1,9 @@
 ﻿using SpeedTextRPG.Managers;
-using SpeedTextRPG.Skills;
-using SpeedTextRPG.Skills.Asta;
 
 namespace SpeedTextRPG
 {
     public class Game
     {
-        // Text RPG Loop
         private bool _gameOver = false;
         private ConsoleKey _inputKey;
 
@@ -23,37 +20,42 @@ namespace SpeedTextRPG
                 Update();
             }
         }
+
+        // 전체적인 데이터 초기화
         private void Init()
         {
-            _player = new("DevIRU", "LOGGER");
-
-            Character a = CharacterFactory.Instance.Create(CharacterId.DanHeng);
-            Character h = CharacterFactory.Instance.Create(CharacterId.Asta);
-
-            CharacterGroup monster = new("Test");
-            _player.Group.SetCharacter(a);
-            monster.SetCharacter(h);
-
-            _player.BattleEncounter(monster);
+            Console.OutputEncoding = System.Text.Encoding.Unicode; // UTF-16 출력
         }
+
+        // 데이터 로딩 같은 느낌으로 사용
         private void Start()
         {
+            _player = new("DevIRU", "LOGGER");
+            _player.Group.SetCharacter(CharacterFactory.Instance.Create(CharacterId.Asta));
+            _player.Group.SetCharacter(CharacterFactory.Instance.Create(CharacterId.DanHeng));
+
+            // Player를 넘겨서 BattleScene 초기화
+            SceneManager.Instance.RegisterScene(SceneType.Title, new TitleScene());
+            SceneManager.Instance.RegisterScene(SceneType.Battle, new BattleScene(_player));
+
+            SceneManager.Instance.ChangeScene(SceneType.Title);
         }
+
+        // 그림 그리기 UI 느낌
         private void Render()
         {
-            Console.Clear();
-            BattleManager.Instance.Print();
+            SceneManager.Instance.RenderCurrentScene();
         }
+
         private void Input()
         {
-            _inputKey = ConsoleKey.None;
             _inputKey = Console.ReadKey(true).Key;
-            BattleManager.Instance.NextTurn();
-            _inputKey = Console.ReadKey(true).Key;
+            SceneManager.Instance.HandleInput(_inputKey);
         }
+
         private void Update()
         {
-
+            SceneManager.Instance.UpdateCurrentScene();
         }
     }
 }

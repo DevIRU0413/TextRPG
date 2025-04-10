@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using SpeedTextRPG.Interfaces;
 
     public class BattleManager
     {
@@ -23,6 +22,7 @@
         private List<Character> _characterList = new();
         private List<Character> _groupA;
         private List<Character> _groupB;
+
         private Character _curTurn;
         private bool _isBattle = false;
 
@@ -37,7 +37,7 @@
             _characterList.AddRange(_groupB);
 
             BattleChactersSetting(_characterList);
-            InsertSort();
+            NextTurn();
             _isBattle = true;
         }
 
@@ -60,6 +60,17 @@
 
         public void NextTurn()
         {
+            // 사망자 정리
+            _characterList.RemoveAll(c => c.HealthPoint <= 0);
+
+            // 전투 캐릭 유무
+            if (_characterList.Count == 0)
+            {
+                Console.WriteLine("[BattleManager] 모든 캐릭터가 사망했습니다.");
+                return;
+            }
+
+            // 현재 턴 캐릭, 턴 끝
             float minusPoint = 0;
             if (_curTurn != null)
             {
@@ -72,11 +83,15 @@
                 }
             }
 
+            // 정렬
             InsertSort();
+
+            // 첫 캐릭 턴 부여
             _curTurn = _characterList[0];
             minusPoint = _curTurn.ActionPoint;
             _curTurn.turnCount++;
 
+            // 전체적 행동 포인트 감소
             for (int i = 0; i < _characterList.Count; i++)
             {
                 _characterList[i].ActionPoint -= minusPoint;
@@ -87,6 +102,7 @@
                 trigger.OnTurnStart(_curTurn);
             }
         }
+
 
         private float GetBattleActionPoint(Character user)
         {
@@ -102,6 +118,34 @@
             }
         }
 
+        
+
+        public List<Character> GetTurnOrder()
+        {
+            return _characterList;
+        }
+
+        public List<Character> GetCharacterList()
+        {
+            return _characterList;
+        }
+
+        public Character GetTurnCharacter()
+        {
+            return _curTurn;
+        }
+
+        // 살아 있는 거 판별 및 리턴
+        public List<Character> GetAliveAllies()
+        {
+            return _groupA.FindAll(c => c.HealthPoint > 0);
+        }
+        public List<Character> GetAliveEnemies()
+        {
+            return _groupB.FindAll(c => c.HealthPoint > 0);
+        }
+
+        // 같은 편 다른편 판별 및 리턴
         public List<Character> GetAllEnemies(Character user)
         {
             if (_groupA.Contains(user)) return _groupB;
@@ -116,7 +160,12 @@
             return new List<Character>();
         }
 
-        public void Print()
+        public void BattleClear()
+        {
+            _characterList.Clear();
+        }
+
+        /*public void Print()
         {
             if (!_isBattle) return;
 
@@ -131,6 +180,6 @@
             {
                 Console.WriteLine($"[{character.Name}] [{(int)(character.ActionPoint * 100) / 100.0f}] t > {character.turnCount}");
             }
-        }
+        }*/
     }
 }
