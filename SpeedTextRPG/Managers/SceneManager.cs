@@ -37,7 +37,7 @@ namespace SpeedTextRPG.Managers
             _currentScene?.Update();
         }
 
-        public void HandleInput(ConsoleKey key)
+        public void HandleInput(ConsoleKey key = ConsoleKey.None)
         {
             _currentScene?.HandleInput(key);
         }
